@@ -1,3 +1,5 @@
+using Tetris.Entities;
+
 namespace Tetris.Core
 {
     public class Board
@@ -12,7 +14,7 @@ namespace Tetris.Core
             _grid = new int[Height, Width];
         }
 
-        public void Draw()
+        public void Draw(Tetromino currentPiece)
         {
             Console.SetCursorPosition(0, 0);
 
@@ -23,15 +25,41 @@ namespace Tetris.Core
 
                 for (int x = 0; x < Width; x++)
                 {
-                    if (_grid[y, x] == 0)
+                    bool drewPiece = false;
+
+                    // Verifica se a coordenada atual (x, y) pertence à peça que está caindo
+                    if (currentPiece != null)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkGray;
-                        Console.Write(" .");
+                        // Calcula a posição relativa da coordenada dentro da matriz da peça
+                        int pieceX = x - currentPiece.X;
+                        int pieceY = y - currentPiece.Y;
+
+                        // Se estiver dentro da caixa da peça e for um bloco preenchido (1)
+                        if (pieceX >= 0 && pieceX < currentPiece.Shape.GetLength(1) &&
+                            pieceY >= 0 && pieceY < currentPiece.Shape.GetLength(0))
+                        {
+                            if (currentPiece.Shape[pieceY, pieceX] == 1)
+                            {
+                                Console.ForegroundColor = currentPiece.Color;
+                                Console.Write("[]"); 
+                                drewPiece = true;
+                            }
+                        }
                     }
-                    else
+
+                    if (!drewPiece)
                     {
-                        Console.Write("[]");
+                        if (_grid[y, x] == 0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                            Console.Write(" .");
+                        }
+                        else
+                        {
+                            Console.Write("[]"); 
+                        }
                     }
+                
                 }
 
                 Console.ForegroundColor = ConsoleColor.DarkGray;
