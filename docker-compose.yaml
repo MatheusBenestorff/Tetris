@@ -1,0 +1,11 @@
+services:
+  tetris-game:
+    build: .
+    image: tetris-console
+    container_name: tetris_running
+
+    stdin_open: true
+    tty: true
+
+    volumes:
+      - .:/app
