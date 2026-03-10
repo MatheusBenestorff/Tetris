@@ -10,6 +10,7 @@ namespace Tetris.UI
 
         public int Show()
         {
+            _saveExists = false; 
 
             if (!_saveExists && SelectedOption == 1)
             {
@@ -19,7 +20,7 @@ namespace Tetris.UI
             Console.Clear();
             Console.CursorVisible = false;
 
-            _baseStartY = Math.Max(2, (Console.WindowHeight - 24) / 2);
+            _baseStartY = Math.Max(2, (Console.WindowHeight - 22) / 2);
 
             DrawMenuArt();
 
@@ -60,14 +61,40 @@ namespace Tetris.UI
         {
             int currentY = _baseStartY;
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            WriteCentered(@"TETRIS", currentY++);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            WriteCentered(@"████████╗███████╗████████╗██████╗ ██╗███████╗", currentY++);
+            WriteCentered(@"╚══██╔══╝██╔════╝╚══██╔══╝██╔══██╗██║██╔════╝", currentY++);
+            Console.ForegroundColor = ConsoleColor.Blue;
+            WriteCentered(@"   ██║   █████╗     ██║   ██████╔╝██║███████╗", currentY++);
+            WriteCentered(@"   ██║   ██╔══╝     ██║   ██╔══██╗██║╚════██║", currentY++);
+            Console.ForegroundColor = ConsoleColor.DarkMagenta; // Roxo
+            WriteCentered(@"   ██║   ███████╗   ██║   ██║  ██║██║███████║", currentY++);
+            WriteCentered(@"   ╚═╝   ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝╚══════╝", currentY++);
+
+            currentY += 2;
+
+            int centerX = Console.WindowWidth / 2;
+            
+            Console.SetCursorPosition(centerX - 12, currentY);
+            Console.ForegroundColor = ConsoleColor.Yellow; Console.Write("[][]");
+            Console.SetCursorPosition(centerX - 12, currentY + 1);
+            Console.ForegroundColor = ConsoleColor.Yellow; Console.Write("[][]");
+
+            Console.SetCursorPosition(centerX - 2, currentY);
+            Console.ForegroundColor = ConsoleColor.DarkMagenta; Console.Write("[][][]");
+            Console.SetCursorPosition(centerX, currentY + 1);
+            Console.ForegroundColor = ConsoleColor.DarkMagenta; Console.Write("[]");
+
+            Console.SetCursorPosition(centerX + 10, currentY);
+            Console.ForegroundColor = ConsoleColor.Green; Console.Write("  [][]");
+            Console.SetCursorPosition(centerX + 10, currentY + 1);
+            Console.ForegroundColor = ConsoleColor.Green; Console.Write("[][]");
 
         }
 
         public void DrawMenuOptions()
         {
-            int optionsY = _baseStartY + 13; 
+            int optionsY = _baseStartY + 16; 
 
             for (int i = 0; i < Options.Length; i++)
             {
@@ -82,11 +109,12 @@ namespace Tetris.UI
                 if (i == 1 && !_saveExists)
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.BackgroundColor = ConsoleColor.Black;
                 }
                 else if (i == SelectedOption)
                 {
                     Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.Yellow;
+                    Console.BackgroundColor = ConsoleColor.Cyan; 
                 }
                 else
                 {

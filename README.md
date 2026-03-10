@@ -4,6 +4,10 @@ A Tetris clone developed purely in **C# (Vanilla)** to run directly in the termi
 
 ---
 
+![alt text](screenshots/image.png)
+
+---
+
 ## Tech Stack
 
 ![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)

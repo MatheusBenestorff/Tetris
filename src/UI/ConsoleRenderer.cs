@@ -88,13 +88,13 @@ namespace Tetris.UI
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.SetCursorPosition(HUD_START_X, 13);
-            Console.Write("Controlos:");
+            Console.Write("Controls:");
             Console.SetCursorPosition(HUD_START_X, 14);
-            Console.Write("[<] [>] Mover");
+            Console.Write("[<] [>] Move");
             Console.SetCursorPosition(HUD_START_X, 15);
-            Console.Write("[ ^ ]   Rodar");
+            Console.Write("[ ^ ]   Rotate");
             Console.SetCursorPosition(HUD_START_X, 16);
-            Console.Write("[ v ]   Acelerar");
+            Console.Write("[ v ]   Accelerate");
 
             Console.ResetColor();
         }
