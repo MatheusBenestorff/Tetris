@@ -45,6 +45,7 @@ namespace Tetris.Core
                         Console.Clear();
                         return;
                     }
+                    
                     HandleInput(key);
                 }
 

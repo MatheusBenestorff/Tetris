@@ -56,6 +56,7 @@ namespace Tetris.Core
                         }
                         else
                         {
+                            Console.ForegroundColor = (ConsoleColor)_grid[y, x];
                             Console.Write("[]"); 
                         }
                     }
@@ -96,6 +97,26 @@ namespace Tetris.Core
                 }
             }
             return true;
+        }
+
+        public void LockPiece(Tetromino piece)
+        {
+            for (int row = 0; row < piece.Shape.GetLength(0); row++)
+            {
+                for (int col = 0; col < piece.Shape.GetLength(1); col++)
+                {
+                    if (piece.Shape[row, col] == 1)
+                    {
+                        int boardX = piece.X + col;
+                        int boardY = piece.Y + row;
+
+                        if (boardY >= 0 && boardY < Height && boardX >= 0 && boardX < Width)
+                        {
+                            _grid[boardY, boardX] = (int)piece.Color;
+                        }
+                    }
+                }
+            }
         }
     }
 }
