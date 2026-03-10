@@ -118,5 +118,45 @@ namespace Tetris.Core
                 }
             }
         }
+
+        public int ClearFullLines()
+        {
+            int linesCleared = 0;
+
+            for (int y = Height - 1; y >= 0; y--)
+            {
+                bool isFull = true;
+                for (int x = 0; x < Width; x++)
+                {
+                    if (_grid[y, x] == 0) // Se tiver pelo menos um buraco, não está cheia
+                    {
+                        isFull = false;
+                        break;
+                    }
+                }
+
+                if (isFull)
+                {
+                    for (int moveY = y; moveY > 0; moveY--)
+                    {
+                        for (int x = 0; x < Width; x++)
+                        {
+                            _grid[moveY, x] = _grid[moveY - 1, x]; 
+                        }
+                    }
+
+                    for (int x = 0; x < Width; x++)
+                    {
+                        _grid[0, x] = 0;
+                    }
+
+                    linesCleared++;
+                    
+                    y++; 
+                }
+            }
+
+            return linesCleared; 
+        }
     }
 }
