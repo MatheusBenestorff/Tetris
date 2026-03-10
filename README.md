@@ -5,7 +5,6 @@ A Tetris clone developed purely in **C# (Vanilla)** to run directly in the termi
 ---
 
 ![alt text](screenshots/image.png)
-
 ---
 
 ## Tech Stack

@@ -8,6 +8,7 @@ namespace Tetris.Core
     {
         private Board _board;
         private Tetromino _currentPiece;
+        private Tetromino _nextPiece;
         private ConsoleRenderer _renderer;
 
         private bool _isGameOver;
@@ -21,15 +22,24 @@ namespace Tetris.Core
         {
             _board = new Board();
             _renderer = new ConsoleRenderer();
+
+            _nextPiece = GenerateRandomPiece();
+
             SpawnNewPiece();
+        }
+
+        private Tetromino GenerateRandomPiece()
+        {
+            Random rand = new Random();
+            TetrominoShape randomShape = (TetrominoShape)rand.Next(0, 7); 
+            return new Tetromino(randomShape);
         }
 
         private void SpawnNewPiece()
         {
-            Random rand = new Random();
-            TetrominoShape randomShape = (TetrominoShape)rand.Next(0, 7);
-
-            _currentPiece = new Tetromino(randomShape);
+            _currentPiece = _nextPiece;
+            
+            _nextPiece = GenerateRandomPiece();
         }
 
         public void Start()
@@ -51,7 +61,7 @@ namespace Tetris.Core
 
             while (!_isGameOver)
             {
-                _renderer.DrawScreen(_board, _currentPiece, Score, Level, Lines);
+                _renderer.DrawScreen(_board, _currentPiece, _nextPiece, Score, Level, Lines);
 
                 while (Console.KeyAvailable)
                 {
