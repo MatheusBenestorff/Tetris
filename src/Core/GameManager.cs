@@ -8,19 +8,27 @@ namespace Tetris.Core
     {
         private Board _board;
         private Tetromino _currentPiece;
+        private ConsoleRenderer _renderer;
+
         private bool _isGameOver;
+
+        // HUD
+        public int Score { get; private set; }
+        public int Level { get; private set; } = 1;
+        public int Lines { get; private set; }
 
         public GameManager()
         {
             _board = new Board();
+            _renderer = new ConsoleRenderer();
             SpawnNewPiece();
         }
 
         private void SpawnNewPiece()
         {
             Random rand = new Random();
-            TetrominoShape randomShape = (TetrominoShape)rand.Next(0, 7); 
-            
+            TetrominoShape randomShape = (TetrominoShape)rand.Next(0, 7);
+
             _currentPiece = new Tetromino(randomShape);
         }
 
@@ -39,32 +47,29 @@ namespace Tetris.Core
             _isGameOver = false;
 
             int dropTimer = 0;
-            int dropInterval = 10; 
+            int dropInterval = 10;
 
             while (!_isGameOver)
             {
-                _board.Draw(_currentPiece);
+                _renderer.DrawScreen(_board, _currentPiece, Score, Level, Lines);
 
-                // Input
-                while (Console.KeyAvailable) 
+                while (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey(true);
 
-                    if(key.Key == ConsoleKey.Escape)
+                    if (key.Key == ConsoleKey.Escape)
                     {
                         Console.Clear();
                         return;
                     }
-
                     HandleInput(key);
                 }
 
-                // Gravity
                 dropTimer++;
                 if (dropTimer >= dropInterval)
                 {
                     dropTimer = 0;
-                    
+
                     if (_board.IsValidPosition(_currentPiece, _currentPiece.X, _currentPiece.Y + 1))
                     {
                         _currentPiece.MoveDown();
@@ -73,11 +78,24 @@ namespace Tetris.Core
                     {
                         _board.LockPiece(_currentPiece);
 
-                        int linesCleared = _board.ClearFullLines(); 
+                        int linesCleared = _board.ClearFullLines();
+
+                        if (linesCleared > 0)
+                        {
+                            Lines += linesCleared;
+
+                            if (linesCleared == 1) Score += 100 * Level;
+                            else if (linesCleared == 2) Score += 300 * Level;
+                            else if (linesCleared == 3) Score += 500 * Level;
+                            else if (linesCleared == 4) Score += 800 * Level;
+
+                            Level = (Lines / 10) + 1;
+
+                            dropInterval = Math.Max(2, 10 - (Level - 1));
+                        }
 
                         SpawnNewPiece();
 
-                        // Se a peça nova já nascer batendo em algo, a torre chegou no limite do teto
                         if (!_board.IsValidPosition(_currentPiece, _currentPiece.X, _currentPiece.Y))
                         {
                             _isGameOver = true;
@@ -85,8 +103,7 @@ namespace Tetris.Core
                     }
                 }
 
-                // Tick
-                Thread.Sleep(50); 
+                Thread.Sleep(50);
             }
         }
 
@@ -98,21 +115,21 @@ namespace Tetris.Core
                     if (_board.IsValidPosition(_currentPiece, _currentPiece.X - 1, _currentPiece.Y))
                         _currentPiece.MoveLeft();
                     break;
-                
+
                 case ConsoleKey.RightArrow:
                     if (_board.IsValidPosition(_currentPiece, _currentPiece.X + 1, _currentPiece.Y))
                         _currentPiece.MoveRight();
                     break;
-                
+
                 case ConsoleKey.DownArrow:
                     if (_board.IsValidPosition(_currentPiece, _currentPiece.X, _currentPiece.Y + 1))
                         _currentPiece.MoveDown();
                     break;
-                
+
                 case ConsoleKey.UpArrow:
                     // Roda a peça primeiro para testar
                     _currentPiece.Rotate();
-                    
+
                     // Se a nova rotação fizer a peça entrar na parede
                     if (!_board.IsValidPosition(_currentPiece, _currentPiece.X, _currentPiece.Y))
                     {
@@ -125,6 +142,8 @@ namespace Tetris.Core
             }
         }
 
+
+
         private void InitializeGameState(int selectedOption)
         {
 
@@ -134,7 +153,7 @@ namespace Tetris.Core
             }
             else if (selectedOption == 1) // Continuar
             {
-                
+
             }
         }
     }

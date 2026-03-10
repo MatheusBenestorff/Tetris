@@ -69,6 +69,34 @@ namespace Tetris.UI
             Console.ResetColor();
         }
 
+        private void DrawHUD(int score, int level, int lines)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.SetCursorPosition(HUD_START_X, 2);
+            Console.Write("=== TETRIS ===");
 
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.SetCursorPosition(HUD_START_X, 5);
+            Console.Write($"LEVEL: {level:D2}");
+
+            Console.SetCursorPosition(HUD_START_X, 7);
+            Console.Write($"SCORE: {score:D6}");
+
+            Console.SetCursorPosition(HUD_START_X, 9);
+            Console.Write($"LINES: {lines:D3}");
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.SetCursorPosition(HUD_START_X, 13);
+            Console.Write("Controlos:");
+            Console.SetCursorPosition(HUD_START_X, 14);
+            Console.Write("[<] [>] Mover");
+            Console.SetCursorPosition(HUD_START_X, 15);
+            Console.Write("[ ^ ]   Rodar");
+            Console.SetCursorPosition(HUD_START_X, 16);
+            Console.Write("[ v ]   Acelerar");
+
+            Console.ResetColor();
+        }
     }
 }
