@@ -19,7 +19,10 @@ namespace Tetris.Core
 
         private void SpawnNewPiece()
         {
-            _currentPiece = new Tetromino(TetrominoShape.T);
+            Random rand = new Random();
+            TetrominoShape randomShape = (TetrominoShape)rand.Next(0, 7); 
+            
+            _currentPiece = new Tetromino(randomShape);
         }
 
         public void Start()
@@ -45,7 +48,7 @@ namespace Tetris.Core
                         Console.Clear();
                         return;
                     }
-                    
+
                     HandleInput(key);
                 }
 
@@ -61,7 +64,17 @@ namespace Tetris.Core
                     }
                     else
                     {
+                        _board.LockPiece(_currentPiece);
+
+                        int linesCleared = _board.ClearFullLines(); 
+
                         SpawnNewPiece();
+
+                        // Se a peça nova já nascer batendo em algo, a torre chegou no limite do teto
+                        if (!_board.IsValidPosition(_currentPiece, _currentPiece.X, _currentPiece.Y))
+                        {
+                            _isGameOver = true;
+                        }
                     }
                 }
 
