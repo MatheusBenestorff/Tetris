@@ -1,7 +1,6 @@
-using System;
-using System.Threading;
 using Tetris.Entities;
 using Tetris.Utils;
+using Tetris.UI;
 
 namespace Tetris.Core
 {
@@ -27,6 +26,14 @@ namespace Tetris.Core
 
         public void Start()
         {
+
+            Menu menu = new Menu();
+            int selectedOption = menu.Show();
+
+            if (selectedOption == 2) return; // Sair
+
+            InitializeGameState(selectedOption);
+
             Console.Clear();
             Console.CursorVisible = false;
             _isGameOver = false;
@@ -115,6 +122,19 @@ namespace Tetris.Core
                         _currentPiece.Rotate();
                     }
                     break;
+            }
+        }
+
+        private void InitializeGameState(int selectedOption)
+        {
+
+            if (selectedOption == 0) // Novo Jogo
+            {
+
+            }
+            else if (selectedOption == 1) // Continuar
+            {
+                
             }
         }
     }

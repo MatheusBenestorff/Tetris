@@ -41,7 +41,7 @@ namespace Tetris.Core
                             if (currentPiece.Shape[pieceY, pieceX] == 1)
                             {
                                 Console.ForegroundColor = currentPiece.Color;
-                                Console.Write("[]"); 
+                                Console.Write("██"); 
                                 drewPiece = true;
                             }
                         }
@@ -57,7 +57,7 @@ namespace Tetris.Core
                         else
                         {
                             Console.ForegroundColor = (ConsoleColor)_grid[y, x];
-                            Console.Write("[]"); 
+                            Console.Write("██"); 
                         }
                     }
                 
