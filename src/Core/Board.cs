@@ -70,5 +70,32 @@ namespace Tetris.Core
             Console.WriteLine("<!====================!>");
             Console.ResetColor();
         }
+
+
+        public bool IsValidPosition(Tetromino piece, int targetX, int targetY)
+        {
+            for (int row = 0; row < piece.Shape.GetLength(0); row++)
+            {
+                for (int col = 0; col < piece.Shape.GetLength(1); col++)
+                {
+                    if (piece.Shape[row, col] == 1)
+                    {
+                        int boardX = targetX + col;
+                        int boardY = targetY + row;
+
+                        if (boardX < 0 || boardX >= Width || boardY >= Height)
+                        {
+                            return false;
+                        }
+
+                        if (boardY >= 0 && _grid[boardY, boardX] != 0)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
     }
 }

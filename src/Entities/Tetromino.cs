@@ -17,7 +17,6 @@ namespace Tetris.Entities
         {
             Type = type;
             
-            // As peças nascem centralizadas no topo do tabuleiro (que tem largura 10)
             X = 3; 
             Y = 0;
 
