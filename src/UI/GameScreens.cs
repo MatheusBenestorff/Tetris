@@ -51,6 +51,7 @@ namespace Tetris.UI
             
             while (Console.KeyAvailable) Console.ReadKey(true);
             Console.ReadLine(); 
+            Console.Clear();
         }
 
         private static void WriteCentered(string text, int y)

@@ -44,6 +44,8 @@ namespace Tetris.Core
 
         public void Start()
         {
+            while(true)
+            {
 
             Menu menu = new Menu();
             int selectedOption = menu.Show();
@@ -117,6 +119,8 @@ namespace Tetris.Core
             }
 
             GameScreens.ShowGameOverScreen(Score, Level, Lines);
+
+            }
         }
 
         private void HandleInput(ConsoleKeyInfo key)
