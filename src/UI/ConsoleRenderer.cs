@@ -99,8 +99,6 @@ namespace Tetris.UI
             Console.Write("[ ^ ]   Rotate");
             Console.SetCursorPosition(HUD_START_X, 19);
             Console.Write("[ v ]   Accelerate");
-
-
             
             Console.ResetColor();
         }
@@ -141,4 +139,3 @@ namespace Tetris.UI
         }
     }
 }
-

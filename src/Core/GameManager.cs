@@ -115,6 +115,8 @@ namespace Tetris.Core
 
                 Thread.Sleep(50);
             }
+
+            GameScreens.ShowGameOverScreen(Score, Level, Lines);
         }
 
         private void HandleInput(ConsoleKeyInfo key)
